@@ -1,0 +1,256 @@
+<form class="space-y-6" (ngSubmit)="onSubmit()" #deviceForm="ngForm">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <label for="network" class="block text-sm font-medium text-gray-900">
+        Network <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="text"
+        id="network"
+        name="network"
+        [(ngModel)]="network"
+        placeholder="Test001"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="location" class="block text-sm font-medium text-gray-900">
+        Location <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="text"
+        id="location"
+        name="location"
+        [(ngModel)]="location"
+        placeholder="Test001"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="country" class="block text-sm font-medium text-gray-900">
+        Country
+      </label>
+      <input
+        type="text"
+        id="country"
+        name="country"
+        [(ngModel)]="country"
+        placeholder="Vietnam"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <div>
+      <label for="region" class="block text-sm font-medium text-gray-900">
+        Region
+      </label>
+      <input
+        type="text"
+        id="region"
+        name="region"
+        [(ngModel)]="region"
+        placeholder="HCM"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <div>
+      <label for="zone" class="block text-sm font-medium text-gray-900">
+        Zone
+      </label>
+      <input
+        type="text"
+        id="zone"
+        name="zone"
+        [(ngModel)]="zone"
+        placeholder="HCM"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <div>
+      <label for="subZone" class="block text-sm font-medium text-gray-900">
+        Sub Zone
+      </label>
+      <input
+        type="text"
+        id="subZone"
+        name="subZone"
+        [(ngModel)]="subZone"
+        placeholder="HCM"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <div>
+      <label for="mobileNumber" class="block text-sm font-medium text-gray-900">
+        Mobile Number
+      </label>
+      <input
+        type="text"
+        id="mobileNumber"
+        name="mobileNumber"
+        [(ngModel)]="mobileNumber"
+        placeholder="Mobile Number"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <div>
+      <label for="address" class="block text-sm font-medium text-gray-900">
+        Address
+      </label>
+      <input
+        type="text"
+        id="address"
+        name="address"
+        [(ngModel)]="address"
+        placeholder="Enter Address"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <div>
+      <label for="gpsLatitude" class="block text-sm font-medium text-gray-900">
+        GPS Coordinates
+      </label>
+      <div class="flex space-x-4">
+        <input
+          type="text"
+          id="gpsLatitude"
+          name="gpsLatitude"
+          [(ngModel)]="gpsLatitude"
+          placeholder="Latitude"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        />
+        <input
+          type="text"
+          id="gpsLongitude"
+          name="gpsLongitude"
+          [(ngModel)]="gpsLongitude"
+          placeholder="Longitude"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+    </div>
+
+    <div>
+      <label
+        for="defaultLayout"
+        class="block text-sm font-medium text-gray-900"
+      >
+        Default Layout
+      </label>
+      <select
+        id="defaultLayout"
+        name="defaultLayout"
+        [(ngModel)]="defaultLayout"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      >
+        <option value="layout1">Select Default Layout</option>
+      </select>
+    </div>
+
+    <div>
+      <label
+        for="defaultPlaylist"
+        class="block text-sm font-medium text-gray-900"
+      >
+        Default Playlist
+      </label>
+      <select
+        id="defaultPlaylist"
+        name="defaultPlaylist"
+        [(ngModel)]="defaultPlaylist"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      >
+        <option value="playlist1">Select Default Playlist</option>
+      </select>
+    </div>
+
+    <div class="col-span-2">
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          id="addOverlay"
+          name="addOverlay"
+          [(ngModel)]="addOverlay"
+          class="h-5 w-5 text-blue-600"
+        />
+        <label for="addOverlay" class="ml-2 text-gray-700">Add Overlay</label>
+      </div>
+    </div>
+
+    <div class="col-span-2">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="dateTimeDisplay"
+            name="dateTimeDisplay"
+            [(ngModel)]="dateTimeDisplay"
+            class="h-5 w-5 text-blue-600"
+          />
+          <label for="dateTimeDisplay" class="ml-2 text-gray-700"
+            >Date/Time Display</label
+          >
+        </div>
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="logoDisplay"
+            name="logoDisplay"
+            [(ngModel)]="logoDisplay"
+            class="h-5 w-5 text-blue-600"
+          />
+          <label for="logoDisplay" class="ml-2 text-gray-700"
+            >Logo Display (Device Internet Status: On/Off)</label
+          >
+        </div>
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="durationChecking"
+            name="durationChecking"
+            [(ngModel)]="durationChecking"
+            class="h-5 w-5 text-blue-600"
+          />
+          <label for="durationChecking" class="ml-2 text-gray-700"
+            >Duration Checking</label
+          >
+        </div>
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="displayBugCheck"
+            name="displayBugCheck"
+            [(ngModel)]="displayBugCheck"
+            class="h-5 w-5 text-blue-600"
+          />
+          <label for="displayBugCheck" class="ml-2 text-gray-700"
+            >Display Bug check on device (code of bug on device)</label
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-end space-x-4 mt-6">
+    <button
+      type="button"
+      class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      class="bg-primary-900 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+    >
+      Submit
+    </button>
+  </div>
+</form>

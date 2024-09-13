@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+tr:nth-child(even) {
+  background-color: #ebeffb;
+}
+
+* {
+  --sb-track-color: none;
+  --sb-thumb-color: #505e73;
+  --sb-size: 2px;
+}
+
+*::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 100%;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 1px;
+}

@@ -1,0 +1,64 @@
+<div
+  class="bg-white shadow-lg rounded-lg p-4 sm:p-6 w-full md:w-3/4 lg:w-1/2 xl:w-1/4 absolute right-2 md:right-10 lg:right-20 z-50"
+  *ngIf="isOpen"
+>
+  <div class="flex justify-between items-center border-b pb-3 mb-4">
+    <h2 class="text-md font-semibold">Filter</h2>
+    <button (click)="close()" class="text-gray-600 hover:text-gray-900">
+      &#10005;
+    </button>
+  </div>
+  <div class="mb-4">
+    <label class="text-sm text-gray-600 block mb-2">Date range</label>
+    <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
+      <input
+        type="date"
+        [(ngModel)]="filter.fromDate"
+        class="border border-gray-300 rounded-lg p-2 w-full focus:ring-blue-500 focus:border-blue-500"
+      />
+      <input
+        type="date"
+        [(ngModel)]="filter.toDate"
+        class="border border-gray-300 rounded-lg p-2 w-full focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+    <button
+      (click)="resetDateRange()"
+      class="text-blue-500 hover:text-blue-700 text-sm mt-2"
+    >
+      Reset
+    </button>
+  </div>
+
+  <div class="mb-4">
+    <label class="text-sm text-gray-600 block mb-2">Status</label>
+    <select
+      [(ngModel)]="filter.status"
+      class="border border-gray-300 rounded-lg p-2 w-full focus:ring-blue-500 focus:border-blue-500"
+    >
+      <option value="Active">Active</option>
+      <option value="Inactive">Inactive</option>
+      <option value="Deleted">Deleted</option>
+    </select>
+    <button
+      (click)="resetStatus()"
+      class="text-blue-500 hover:text-blue-700 text-sm mt-2"
+    >
+      Reset
+    </button>
+  </div>
+  <div class="flex justify-between mt-6">
+    <button
+      (click)="resetAll()"
+      class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg"
+    >
+      Reset All
+    </button>
+    <button
+      (click)="apply()"
+      class="bg-blue-500 text-white px-4 py-2 rounded-lg"
+    >
+      Apply
+    </button>
+  </div>
+</div>

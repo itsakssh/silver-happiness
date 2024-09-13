@@ -1,0 +1,236 @@
+<app-breadcrumb
+  [title]="'Location'"
+  [breadcrumbLinks]="[
+    { label: 'Dashboard', url: '/dashboard' },
+    { label: 'Location', url: '/location' }
+  ]"
+></app-breadcrumb>
+
+<div class="flex flex-col p-6 space-y-6 h-full relative">
+  <div class="flex justify-between items-center">
+    <div class="flex space-x-4">
+      <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">
+        Period: All Time
+      </button>
+      <button class="bg-primary-1000 px-4 py-2 rounded-lg">
+        Status: {{ appliedFilters.status || "ALL" }}
+      </button>
+    </div>
+    <div class="flex space-x-4">
+      <!-- <button
+        class="bg-primary-1000 px-4 py-2 rounded-lg"
+        (click)="toggleFilter()"
+      >
+        Filters
+      </button> -->
+      <button class="bg-primary-1000 px-4 py-2 rounded-lg">
+        <a routerLink="/setup/add-location">Create Location</a>
+      </button>
+      <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">
+        CSV
+      </button>
+    </div>
+  </div>
+
+  <!-- <app-filter
+    *ngIf="isFilterOpen"
+    [isOpen]="isFilterOpen"
+    (closeModal)="toggleFilter()"
+    (applyFilter)="applyFilter($event)"
+  ></app-filter> -->
+
+  <div class="overflow-x-auto bg-white rounded-lg shadow relative p-2">
+    <table
+      id="locationTable"
+      class="min-w-full table-auto"
+      datatable
+      [dtOptions]="dtOptions"
+    >
+      <thead class="bg-gray-50"></thead>
+      <tbody class="bg-white divide-y divide-gray-200"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal for Editing Location -->
+<div
+  *ngIf="isEditModal"
+  class="fixed inset-0 z-[50] flex items-center justify-center bg-black bg-opacity-50 w-full"
+>
+  <app-toast></app-toast>
+  <div class="bg-white rounded-lg p-8 space-y-4 w-1/2">
+    <h2 class="text-xl font-semibold">Edit Location</h2>
+    <form
+      [formGroup]="locationForm"
+      (ngSubmit)="updateLocationHandler()"
+      class="space-y-6"
+    >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label
+            for="locationName"
+            class="block text-sm font-medium text-gray-900"
+          >
+            Location Name <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="locationName"
+            formControlName="location_name"
+            placeholder="Location Name"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="country" class="block text-sm font-medium text-gray-900">
+            Country <span class="text-red-500">*</span>
+          </label>
+          <select
+            id="country"
+            formControlName="country_id"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            required
+          >
+            <option value="">Select Country</option>
+            <option
+              *ngFor="let country of countryList"
+              [value]="country.country_id"
+            >
+              {{ country.country_name }}
+            </option>
+          </select>
+        </div>
+
+        <div>
+          <label for="region" class="block text-sm font-medium text-gray-900">
+            Region <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="region"
+            formControlName="region_name"
+            placeholder="Region Name"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="timeZone" class="block text-sm font-medium text-gray-900">
+            Time Zone <span class="text-red-500">*</span>
+          </label>
+          <select
+            id="timeZone"
+            formControlName="timezone_id"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            required
+          >
+            <option value="">Select Timezone</option>
+            <option
+              *ngFor="let timezone of timeZoneList"
+              [value]="timezone.timezone_id"
+            >
+              {{ timezone.time_zone }}
+            </option>
+          </select>
+        </div>
+
+        <div>
+          <label for="zoneName" class="block text-sm font-medium text-gray-900">
+            Zone Name <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="zoneName"
+            formControlName="zone_name"
+            placeholder="Zone Name"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+
+        <div>
+          <label
+            for="subZoneName"
+            class="block text-sm font-medium text-gray-900"
+          >
+            Sub Zone Name <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="subZoneName"
+            formControlName="sub_zone_name"
+            placeholder="Sub Zone Name"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="tags" class="block text-sm font-medium text-gray-900">
+            Tags
+          </label>
+          <input
+            type="text"
+            id="tags"
+            formControlName="location_tags"
+            placeholder="Enter Tag"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+        <div class="md:col-span-2">
+          <label
+            for="description"
+            class="block text-sm font-medium text-gray-900"
+          >
+            Description
+          </label>
+          <textarea
+            id="description"
+            formControlName="location_desc"
+            rows="4"
+            placeholder="Enter Description"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          ></textarea>
+        </div>
+
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="status"
+            formControlName="location_status"
+            class="h-5 w-5 text-blue-600"
+          />
+          <label for="status" class="ml-2 text-gray-700">Status</label>
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-4">
+        <button
+          type="button"
+          class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+          (click)="closeEditModal()"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+          (click)="deleteLocationHandler(locationForm.value.location_id)"
+        >
+          Delete
+        </button>
+
+        <button
+          type="submit"
+          class="bg-primary-900 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

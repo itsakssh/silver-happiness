@@ -1,0 +1,166 @@
+<app-breadcrumb
+  [title]="'Playlist'"
+  [breadcrumbLinks]="[
+    { label: 'Dashboard', url: '/dashboard' },
+    { label: 'Playlist', url: '/setup/playlist' }
+  ]"
+></app-breadcrumb>
+
+<div class="flex flex-col p-6 space-y-6 h-full relative">
+  <div class="flex justify-between items-center">
+    <div class="flex space-x-4">
+      <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">
+        Period: All Time
+      </button>
+      <button class="bg-primary-1000 px-4 py-2 rounded-lg">
+        Status: Active
+      </button>
+    </div>
+    <div class="flex space-x-4">
+      <button
+        class="bg-primary-1000 px-4 py-2 rounded-lg"
+        (click)="toggleFilter()"
+      >
+        Filters
+      </button>
+      <button class="bg-primary-1000 px-4 py-2 rounded-lg">
+        <a routerLink="/setup/add-playlist">Create playlist</a>
+      </button>
+      <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">
+        CSV
+      </button>
+    </div>
+  </div>
+
+  <app-filter
+    *ngIf="isFilterOpen"
+    [isOpen]="isFilterOpen"
+    (closeModal)="toggleFilter()"
+    (applyFilter)="applyFilter($event)"
+  ></app-filter>
+
+  <div class="overflow-x-auto bg-white rounded-lg shadow p-2">
+    <table
+      id="playlistTable"
+      class="min-w-full table-auto"
+      datatable
+      [dtOptions]="dtOptions"
+    >
+      <thead class="bg-gray-50"></thead>
+      <tbody class="bg-white divide-y divide-gray-200"></tbody>
+    </table>
+  </div>
+</div>
+
+<div
+  *ngIf="isEditModal"
+  class="fixed inset-0 z-[50] flex items-center justify-center bg-black bg-opacity-50 w-full"
+>
+  <app-toast></app-toast>
+  <div class="bg-white rounded-lg p-8 space-y-4 w-1/2">
+    <h2 class="text-xl font-semibold">Edit Playlist</h2>
+
+    <form
+      class="space-y-6 h-full"
+      (ngSubmit)="updatePlayListHandler()"
+      #playlistForm="ngForm"
+    >
+      <div class="grid grid-cols-3 gap-6">
+        <div>
+          <label for="playlist" class="block text-sm font-medium text-gray-900">
+            Play List Name <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="playlist"
+            name="playlist"
+            [(ngModel)]="selectedPlaylists.playlist_name"
+            placeholder="Play List Name"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+        <div>
+          <label for="duration" class="block text-sm font-medium text-gray-900">
+            Duration (Second) <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="number"
+            id="duration"
+            name="duration"
+            [(ngModel)]="selectedPlaylists.playlist_duration"
+            placeholder="100"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+        <div>
+          <label for="tags" class="block text-sm font-medium text-gray-900">
+            Tags
+          </label>
+          <input
+            type="text"
+            id="tags"
+            name="tags"
+            [(ngModel)]="selectedPlaylists.playlist_tag"
+            placeholder="Enter Tag"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label
+          for="description"
+          class="block text-sm font-medium text-gray-900"
+        >
+          Description
+        </label>
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="selectedPlaylists.playlist_desc"
+          rows="4"
+          placeholder="Enter Description"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        ></textarea>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="status"
+            name="status"
+            [(ngModel)]="selectedPlaylists.playlist_status"
+            class="w-4 h-4 border border-gray-300 rounded focus:ring-blue-500"
+          />
+          <label for="status" class="ml-2 text-sm text-gray-700">Status</label>
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-4">
+        <button
+          type="button"
+          class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+          (click)="closeEditModal()"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+          (click)="deleteNetworkHandler(selectedPlaylists.playlist_id)"
+        >
+          Delete
+        </button>
+        <button
+          type="submit"
+          class="bg-primary-900 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,268 @@
+<app-breadcrumb
+  [title]="'Location'"
+  [breadcrumbLinks]="[
+    { label: 'Dashboard', url: '/dashboard' },
+    { label: 'Layout', url: '/add-layout' }
+  ]"
+></app-breadcrumb>
+
+<div class="flex flex-col p-6 space-y-6 h-full relative">
+  <!-- Header with Filters, Search, and Buttons -->
+  <div class="flex justify-between items-center">
+    <div class="flex space-x-4">
+      <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">
+        Period: All Time
+      </button>
+      <button class="bg-primary-1000 px-4 py-2 rounded-lg">
+        Status: {{ appliedFilters.status || "ALL" }}
+      </button>
+    </div>
+    <div class="flex space-x-4">
+      <!-- <input
+        type="text"
+        placeholder="Search Location..."
+        [(ngModel)]="searchTerm"
+        class="border px-4 py-2 rounded-lg focus:outline-none"
+      /> -->
+      <!-- <button
+        class="bg-primary-1000 px-4 py-2 rounded-lg"
+        (click)="toggleFilter()"
+      >
+        Filters
+      </button> -->
+      <button class="bg-primary-1000 px-4 py-2 rounded-lg">
+        <a routerLink="/setup/add-layout" class="text-white">Create Layout</a>
+      </button>
+      <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">
+        CSV
+      </button>
+    </div>
+  </div>
+
+  <!-- Filter Component -->
+  <app-filter
+    *ngIf="isFilterOpen"
+    [isOpen]="isFilterOpen"
+    (closeModal)="toggleFilter()"
+    (applyFilter)="applyFilter($event)"
+  ></app-filter>
+
+  <!-- Data Table -->
+  <div class="overflow-x-auto bg-white rounded-lg shadow relative p-2">
+    <table
+      id="layoutTable"
+      class="min-w-full table-auto"
+      datatable
+      [dtOptions]="dtOptions"
+    >
+      <thead class="bg-gray-50"></thead>
+      <tbody class="bg-white divide-y divide-gray-200"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div
+  *ngIf="isEditModal"
+  class="fixed inset-0 z-[50] flex items-center justify-center bg-black bg-opacity-50 w-full"
+>
+  <app-toast></app-toast>
+  <div class="bg-white rounded-lg p-8 space-y-4 w-1/2">
+    <h2 class="text-xl font-semibold">Edit Location</h2>
+
+    <!-- Edit Layout Form -->
+    <form [formGroup]="layoutForm" (ngSubmit)="updateLayoutHandler()">
+      <!-- First Row with Layout Name, Location, Country, etc. -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Layout Name -->
+        <div>
+          <label
+            for="layoutName"
+            class="block text-sm font-medium text-gray-900"
+          >
+            Layout Name <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="layoutName"
+            formControlName="layoutName"
+            class="form-input mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Layout Name"
+            required
+          />
+        </div>
+
+        <!-- Location -->
+        <div>
+          <label for="location" class="block text-sm font-medium text-gray-900">
+            Location <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="location"
+            formControlName="location"
+            class="form-input mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Location"
+            required
+          />
+        </div>
+
+        <!-- Country -->
+        <div>
+          <label for="country" class="block text-sm font-medium text-gray-900">
+            Country <span class="text-red-500">*</span>
+          </label>
+          <select
+            id="country"
+            formControlName="country_id"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            required
+          >
+            <option value="">Select Country</option>
+            <option
+              *ngFor="let country of countryList"
+              [value]="country.country_id"
+            >
+              {{ country.country_name }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Other fields (Region, Zone, Sub Zone, Time Zone) -->
+        <div>
+          <label for="region" class="block text-sm font-medium text-gray-900">
+            Region <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="region"
+            formControlName="region"
+            class="form-input mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Region"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="zone" class="block text-sm font-medium text-gray-900">
+            Zone <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="zone"
+            formControlName="zone"
+            class="form-input mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Zone"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="subZone" class="block text-sm font-medium text-gray-900">
+            Sub Zone <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="subZone"
+            formControlName="subZone"
+            class="form-input mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Sub Zone"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="timeZone" class="block text-sm font-medium text-gray-900">
+            Time Zone <span class="text-red-500">*</span>
+          </label>
+          <select
+            id="timeZone"
+            formControlName="timezone_id"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            required
+          >
+            <option value="">Select Timezone</option>
+            <option
+              *ngFor="let timezone of timeZoneList"
+              [value]="timezone.timezone_id"
+            >
+              {{ timezone.time_zone }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Layout Scale and Status -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        <div>
+          <label
+            for="layoutScale"
+            class="block text-sm font-medium text-gray-900"
+          >
+            Layout Scale
+          </label>
+          <select
+            id="layoutScale"
+            formControlName="layoutScale"
+            class="form-select mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="1.5">1.5</option>
+          </select>
+        </div>
+
+        <!-- Status -->
+        <div class="flex items-center mt-6">
+          <input
+            type="checkbox"
+            id="status"
+            formControlName="status"
+            class="form-checkbox w-5 h-5 text-blue-600"
+          />
+          <label for="status" class="ml-2 text-gray-700">Status</label>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="mt-4">
+        <label
+          for="description"
+          class="block text-sm font-medium text-gray-900"
+        >
+          Description
+        </label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="2"
+          class="form-textarea mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Enter Description"
+        ></textarea>
+      </div>
+
+      <!-- Submit and Cancel Buttons -->
+      <div class="flex justify-end space-x-4 mt-8">
+        <button
+          type="button"
+          class="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
+          (click)="closeEditModal()"
+        >
+          CLose
+        </button>
+        <button
+          type="button"
+          class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+          (click)="deleteLayoutHandler(layoutForm.value.layout_id)"
+        >
+          Delete
+        </button>
+
+        <button
+          type="submit"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

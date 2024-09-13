@@ -1,0 +1,93 @@
+<header class="sticky top-0 z-50 bg-primary-900">
+  <div class="h-[82px] border-b-[1px] border-[#697485] w-full flex">
+    <div class="flex items-center justify-between w-full">
+      <div
+        class="logo w-[280px] h-[82px] border-r-[1px] border-[#697485] flex items-center justify-center py-4"
+      >
+        <img src="../../../assets/images/logo.png" alt="logo" />
+      </div>
+      <div class="px-5 flex items-center justify-center gap-5">
+        <div>
+          <p class="text-white">
+            <strong>Server Time:</strong><span> 04/Sep/2024</span>
+          </p>
+        </div>
+        <ul class="flex items-center justify-center gap-5 cursor-pointer">
+          <li>
+            <select
+              name="eng"
+              id="eng"
+              class="bg-transparent text-white border-b border-gray-400 focus:outline-none focus:border-white"
+            >
+              <option value="eng" class="text-black">ENG</option>
+              <option value="eng" class="text-black">ENG</option>
+              <option value="eng" class="text-black">ENG</option>
+            </select>
+          </li>
+
+          <li>
+            <img
+              src="../../../assets/icons/bell.svg"
+              alt="icon"
+              class="w-5 h-5 mr-2"
+              [ngClass]="{ 'text-primary-1000': notificationModalOpen }"
+              (click)="toggleNotificationModal()"
+            />
+          </li>
+          <li>
+            <img
+              src="../../../assets/icons/clock.svg"
+              alt="icon"
+              class="w-5 h-5 mr-2 cursor-pointer"
+              [ngClass]="{ 'text-primary-1000': clockModalOpen }"
+              (click)="toggleClockModal()"
+            />
+          </li>
+          <li>
+            <img
+              src="../../../assets/icons/location.svg"
+              alt="icon"
+              class="w-5 h-5 mr-2"
+              [ngClass]="{ 'text-primary-1000': locationModalOpen }"
+              (click)="toggleLocationModal()"
+            />
+          </li>
+        </ul>
+        <div>
+          <img
+            src="../../../assets/icons/userprofilepic.png"
+            alt="user-profile-pic"
+            class="w-10 rounded-md cursor-pointer"
+            [ngClass]="{ 'text-primary-1000': profileModalOpen }"
+            (click)="toggleProfileModal()"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-modal
+    [title]="'Brand Information'"
+    [events]="brands"
+    [isOpen]="clockModalOpen"
+    (close)="closeAllModals()"
+  ></app-modal>
+  <app-modal
+    [title]="'Notifications'"
+    [events]="notifications"
+    [isOpen]="notificationModalOpen"
+    (close)="closeAllModals()"
+  ></app-modal>
+  <app-modal
+    [title]="'New Created Device'"
+    [events]="devices"
+    [isOpen]="locationModalOpen"
+    (close)="closeAllModals()"
+  ></app-modal>
+  <app-modal
+    [title]="'Profile Info'"
+    [events]="profileLinks"
+    [isOpen]="profileModalOpen"
+    (close)="closeAllModals()"
+  ></app-modal>
+</header>
+<app-toast></app-toast>

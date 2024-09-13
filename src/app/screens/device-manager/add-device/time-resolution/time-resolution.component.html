@@ -1,0 +1,156 @@
+<form class="space-y-6" (ngSubmit)="onSubmit()" #timeResolutionForm="ngForm">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <label for="startTime" class="block text-sm font-medium text-gray-900">
+        Start Time <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="time"
+        id="startTime"
+        name="startTime"
+        [(ngModel)]="startTime"
+        placeholder="00:00"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="endTime" class="block text-sm font-medium text-gray-900">
+        End Time <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="time"
+        id="endTime"
+        name="endTime"
+        [(ngModel)]="endTime"
+        placeholder="00:00"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="unit" class="block text-sm font-medium text-gray-900">
+        Screen Dimension Unit <span class="text-red-500">*</span>
+      </label>
+      <select
+        id="unit"
+        name="unit"
+        [(ngModel)]="screenDimensionUnit"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        required
+      >
+        <option value="percentage">Percentage</option>
+        <option value="pixel">Pixel</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="left" class="block text-sm font-medium text-gray-900">
+        Left <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="text"
+        id="left"
+        name="left"
+        [(ngModel)]="left"
+        placeholder="Left"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="top" class="block text-sm font-medium text-gray-900">
+        Top <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="text"
+        id="top"
+        name="top"
+        [(ngModel)]="top"
+        placeholder="Top"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="width" class="block text-sm font-medium text-gray-900">
+        Width <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="text"
+        id="width"
+        name="width"
+        [(ngModel)]="width"
+        placeholder="Width"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="height" class="block text-sm font-medium text-gray-900">
+        Height <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="text"
+        id="height"
+        name="height"
+        [(ngModel)]="height"
+        placeholder="Height"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label
+        for="deviceLatency"
+        class="block text-sm font-medium text-gray-900"
+      >
+        Device Latency
+      </label>
+      <input
+        type="text"
+        id="deviceLatency"
+        name="deviceLatency"
+        [(ngModel)]="deviceLatency"
+        placeholder="1 ms"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <div class="col-span-2">
+      <label for="volume" class="block text-sm font-medium text-gray-900">
+        Volume Setting <span>({{ volumeSetting }}%)</span>
+      </label>
+      <input
+        type="range"
+        id="volume"
+        name="volume"
+        [(ngModel)]="volumeSetting"
+        min="0"
+        max="100"
+        class="w-full h-2 bg-primary-1000 rounded-lg cursor-pointer"
+      />
+    </div>
+  </div>
+
+  <div class="flex justify-end space-x-4 mt-6">
+    <button
+      type="button"
+      class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      class="bg-primary-900 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+    >
+      Submit
+    </button>
+  </div>
+</form>

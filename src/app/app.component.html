@@ -1,0 +1,30 @@
+<ng-container *ngIf="!loading">
+  <ng-container *ngIf="isLoggedIn; else loginTemplate">
+    <!-- Authenticated User View -->
+    <div class="flex h-screen bg-primary-900">
+      <app-sidebar></app-sidebar>
+      <div class="flex flex-col flex-grow">
+        <app-header></app-header>
+        <div
+          class="bg-gray-100 font-sans w-auto h-full rounded-xl overflow-auto ml-[300px] m-5"
+        >
+          <div class="flex-grow">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Login Page Template -->
+  <ng-template #loginTemplate>
+    <app-login></app-login>
+  </ng-template>
+</ng-container>
+
+<!-- Loading indicator -->
+<ng-container *ngIf="loading">
+  <div class="flex justify-center items-center h-screen">
+    <p class="text-2xl">Loading...</p>
+  </div>
+</ng-container>

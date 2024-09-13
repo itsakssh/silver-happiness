@@ -1,0 +1,98 @@
+<app-breadcrumb
+  [title]="'Add PlayList'"
+  [breadcrumbLinks]="[
+    { label: 'Dashboard', url: '/dashboard' },
+    { label: 'Setup', url: '/setup/playlist' },
+    { label: 'Add PlayList', url: '/add-playlist' }
+  ]"
+></app-breadcrumb>
+
+<div class="flex flex-col p-6 space-y-6 h-full bg-gray-50">
+  <form class="space-y-6 h-full" (ngSubmit)="onSubmit()" #playlistForm="ngForm">
+    <div class="grid grid-cols-3 gap-6">
+      <div>
+        <label for="playlist" class="block text-sm font-medium text-gray-900">
+          PlayList Name <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="playlist"
+          name="playlist"
+          [(ngModel)]="playlistName"
+          placeholder="Play List Name"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+      <div>
+        <label for="duration" class="block text-sm font-medium text-gray-900">
+          Duration (Second) <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="number"
+          id="duration"
+          name="duration"
+          [(ngModel)]="duration"
+          placeholder="100"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+      <div>
+        <label for="tags" class="block text-sm font-medium text-gray-900">
+          Tags
+        </label>
+        <input
+          type="text"
+          id="tags"
+          name="tags"
+          [(ngModel)]="tags"
+          placeholder="Enter Tag"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+    </div>
+
+    <div>
+      <label for="description" class="block text-sm font-medium text-gray-900">
+        Description
+      </label>
+      <textarea
+        id="description"
+        name="description"
+        [(ngModel)]="description"
+        rows="4"
+        placeholder="Enter Description"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      ></textarea>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          id="status"
+          name="status"
+          [(ngModel)]="status"
+          class="w-4 h-4 border border-gray-300 rounded focus:ring-blue-500"
+        />
+        <label for="status" class="ml-2 text-sm text-gray-700">Status</label>
+      </div>
+    </div>
+
+    <div class="flex justify-end space-x-4">
+      <button
+        type="button"
+        class="bg-primary-900 text-white px-4 py-2 rounded-md hover:opacity-90"
+      >
+        <a routerLink="/setup/playlist">Close</a>
+      </button>
+      <button
+        type="submit"
+        class="bg-primary-1000 px-4 py-2 rounded-md hover:hover:opacity-90"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

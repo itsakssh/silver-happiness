@@ -1,0 +1,180 @@
+<app-breadcrumb
+  [title]="'Add Location'"
+  [breadcrumbLinks]="[
+    { label: 'Dashboard', url: '/dashboard' },
+    { label: 'Setup', url: '/setup/location' },
+    { label: 'Add Location', url: '/add-location' }
+  ]"
+></app-breadcrumb>
+
+<div class="flex flex-col p-6 space-y-6 bg-gray-50 border-2 h-full">
+  <form class="space-y-6" (ngSubmit)="onSubmit()" #locationForm="ngForm">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label
+          for="locationName"
+          class="block text-sm font-medium text-gray-900"
+        >
+          Location Name <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="locationName"
+          name="locationName"
+          [(ngModel)]="locationName"
+          placeholder="Location Name"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="country" class="block text-sm font-medium text-gray-900">
+          Country <span class="text-red-500">*</span>
+        </label>
+        <select
+          id="country"
+          name="country"
+          [(ngModel)]="country"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          required
+          (change)="onCountryChange(country)"
+        >
+          <option value="0">Select Country</option>
+          <option
+            *ngFor="let country of countryList"
+            [value]="country.country_id"
+          >
+            {{ country.country_name }}
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label for="region" class="block text-sm font-medium text-gray-900">
+          Region <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="region"
+          name="region"
+          [(ngModel)]="region"
+          placeholder="Region Name"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="timeZone" class="block text-sm font-medium text-gray-900">
+          Time Zone <span class="text-red-500">*</span>
+        </label>
+        <select
+          id="timeZone"
+          name="timeZone"
+          [(ngModel)]="timeZone"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          required
+        >
+          <option value="0">Select Timezone</option>
+          <option
+            *ngFor="let timezone of timeZoneList"
+            [value]="timezone.timezone_id"
+          >
+            {{ timezone.time_zone }}
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label for="zoneName" class="block text-sm font-medium text-gray-900">
+          Zone Name <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="zoneName"
+          name="zoneName"
+          [(ngModel)]="zoneName"
+          placeholder="Zone Name"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div>
+        <label
+          for="subZoneName"
+          class="block text-sm font-medium text-gray-900"
+        >
+          Sub Zone Name <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="subZoneName"
+          name="subZoneName"
+          [(ngModel)]="subZoneName"
+          placeholder="Sub Zone Name"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="tags" class="block text-sm font-medium text-gray-900">
+          Tags
+        </label>
+        <input
+          type="text"
+          id="tags"
+          name="tags"
+          [(ngModel)]="tags"
+          placeholder="Enter Tag"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+
+      <div class="md:col-span-2">
+        <label
+          for="description"
+          class="block text-sm font-medium text-gray-900"
+        >
+          Description
+        </label>
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="description"
+          rows="4"
+          placeholder="Enter Description"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        ></textarea>
+      </div>
+
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          id="status"
+          name="status"
+          [(ngModel)]="status"
+          class="h-5 w-5 text-blue-600"
+        />
+        <label for="status" class="ml-2 text-gray-700">Status</label>
+      </div>
+    </div>
+
+    <div class="flex justify-end space-x-4">
+      <button
+        type="button"
+        class="bg-primary-900 text-white px-4 py-2 rounded-md hover:opacity-90"
+      >
+        <a routerLink="/setup/location">Close</a>
+      </button>
+      <button
+        type="submit"
+        class="bg-primary-1000 px-4 py-2 rounded-md hover:hover:opacity-90"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

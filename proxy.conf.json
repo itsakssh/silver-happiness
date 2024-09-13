@@ -1,0 +1,9 @@
+{
+  "/api": {
+    "target": "http://prowtech.api",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
+

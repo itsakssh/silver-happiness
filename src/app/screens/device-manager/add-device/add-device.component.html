@@ -1,0 +1,52 @@
+<app-breadcrumb
+  [title]="'Add Device'"
+  [breadcrumbLinks]="[
+    { label: 'Dashboard', url: '/dashboard' },
+    { label: 'Device Manager', url: '/device-manager' },
+    { label: 'Add Device', url: '/add-device' }
+  ]"
+></app-breadcrumb>
+
+<div class="mx-6 my-3 tabs border-2 p-[1px] rounded-full">
+  <button
+    [class.active]="currentTab === 'basic-details'"
+    (click)="switchTab('basic-details')"
+  >
+    Basic Details
+  </button>
+  <button
+    [class.active]="currentTab === 'location-layout'"
+    (click)="switchTab('location-layout')"
+  >
+    Location/Layout
+  </button>
+  <button
+    [class.active]="currentTab === 'time-resolution'"
+    (click)="switchTab('time-resolution')"
+  >
+    Time/Resolution
+  </button>
+</div>
+
+<div
+  *ngIf="currentTab === 'basic-details'"
+  class="p-6 space-y-6 bg-gray-50 border-2 h-full"
+>
+  <app-basic-detail></app-basic-detail>
+</div>
+
+<div
+  *ngIf="currentTab === 'location-layout'"
+  class="p-6 space-y-6 bg-gray-50 border-2 h-full"
+>
+  <app-location-layout
+    (locationDetailsChange)="onLocationDetailsChange($event)"
+  ></app-location-layout>
+</div>
+
+<div
+  *ngIf="currentTab === 'time-resolution'"
+  class="p-6 space-y-6 bg-gray-50 border-2 h-full"
+>
+  <app-time-resolution></app-time-resolution>
+</div>

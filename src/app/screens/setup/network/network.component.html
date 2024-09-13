@@ -1,0 +1,313 @@
+<app-breadcrumb
+  [title]="'Network'"
+  [breadcrumbLinks]="[
+    { label: 'Dashboard', url: '/dashboard' },
+    { label: 'Network', url: '/setup/network' }
+  ]"
+></app-breadcrumb>
+
+<div class="flex flex-col p-6 space-y-6 h-full relative">
+  <!-- Top Bar with Filters and Actions -->
+  <div class="flex justify-between items-center">
+    <div class="flex space-x-4">
+      <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">
+        Period: All Time
+      </button>
+      <button class="bg-primary-1000 px-4 py-2 rounded-lg">
+        Status: {{ appliedFilters.status || "ALL" }}
+      </button>
+    </div>
+    <div class="flex space-x-4">
+      <!-- <input
+        type="text"
+        placeholder="Search Network..."
+        [(ngModel)]="searchTerm"
+        class="border px-4 py-2 rounded-lg focus:outline-none"
+      /> -->
+      <button
+        class="bg-primary-1000 px-4 py-2 rounded-lg"
+        (click)="toggleFilter()"
+      >
+        Filters
+      </button>
+      <button class="bg-primary-1000 px-4 py-2 rounded-lg">
+        <a routerLink="/setup/add-network">Create Network</a>
+      </button>
+      <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">
+        CSV
+      </button>
+    </div>
+  </div>
+
+  <!-- Filter Modal -->
+  <app-filter
+    *ngIf="isFilterOpen"
+    [isOpen]="isFilterOpen"
+    (closeModal)="toggleFilter()"
+    (applyFilter)="applyFilter($event)"
+  ></app-filter>
+
+  <!-- Network Table -->
+  <div class="overflow-x-auto bg-white rounded-lg shadow relative p-2">
+    <table
+      id="networkTable"
+      class="min-w-full table-auto"
+      datatable
+      [dtOptions]="dtOptions"
+    >
+      <thead class="bg-gray-50"></thead>
+      <tbody class="bg-white divide-y divide-gray-200"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div
+  *ngIf="isEditModal"
+  class="fixed inset-0 z-[50] flex items-center justify-center bg-black bg-opacity-50 w-screen h-screen"
+>
+  <app-toast></app-toast>
+  <div class="bg-white rounded-lg p-8 spaces-y-4 w-1/2">
+    <h2 class="text-xl font-semibold">Edit Network</h2>
+
+    <form
+      [formGroup]="networkForm"
+      (ngSubmit)="updateNetworkHandler()"
+      class="space-y-6"
+    >
+      <div class="grid grid-cols-2 gap-6">
+        <div>
+          <label for="network" class="block text-sm font-medium text-gray-900">
+            Network <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="network"
+            formControlName="network_name"
+            placeholder="Network Name"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+        <div>
+          <label for="tags" class="block text-sm font-medium text-gray-900">
+            Tags
+          </label>
+          <input
+            type="text"
+            id="tags"
+            formControlName="network_tag"
+            placeholder="Enter Tag"
+            class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label
+          for="description"
+          class="block text-sm font-medium text-gray-900"
+        >
+          Description
+        </label>
+        <textarea
+          id="description"
+          formControlName="network_desc"
+          rows="4"
+          placeholder="Enter Description"
+          class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        ></textarea>
+      </div>
+
+      <!-- Device Settings Section -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700">Device Settings</h3>
+        <div class="grid grid-cols-3 gap-6 mt-4">
+          <div>
+            <label
+              for="start-time"
+              class="block text-sm font-medium text-gray-900"
+            >
+              Start Time <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="time"
+              id="start-time"
+              formControlName="device_start_time"
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label
+              for="end-time"
+              class="block text-sm font-medium text-gray-900"
+            >
+              End Time <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="time"
+              id="end-time"
+              formControlName="device_end_time"
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label
+              for="interval"
+              class="block text-sm font-medium text-gray-900"
+            >
+              Playlog Interval (min)
+            </label>
+            <input
+              type="number"
+              id="interval"
+              formControlName="device_playlog_interval"
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6">
+        <div>
+          <label for="volume" class="block text-sm font-medium text-gray-900">
+            Volume Range ({{
+              networkForm.controls["device_volume_range"].value
+            }}%)
+          </label>
+          <input
+            type="range"
+            id="volume"
+            formControlName="device_volume_range"
+            min="0"
+            max="100"
+            class="mt-2 w-full"
+          />
+        </div>
+        <div>
+          <label
+            for="brightness"
+            class="block text-sm font-medium text-gray-900"
+          >
+            Screen Brightness ({{
+              networkForm.controls["device_screen_brightness"].value
+            }}%)
+          </label>
+          <input
+            type="range"
+            id="brightness"
+            formControlName="device_screen_brightness"
+            min="0"
+            max="100"
+            class="mt-2 w-full"
+          />
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700">Default Values</h3>
+        <div class="grid grid-cols-3 gap-6 mt-4">
+          <div>
+            <label
+              for="start-date"
+              class="block text-sm font-medium text-gray-900"
+            >
+              Start Date
+            </label>
+            <input
+              type="date"
+              id="start-date"
+              formControlName="default_start_date"
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              for="playlist"
+              class="block text-sm font-medium text-gray-900"
+            >
+              Default Playlist
+            </label>
+            <select
+              id="playlist"
+              formControlName="default_play_list"
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="Playlist1">Playlist1</option>
+              <option value="Playlist2">Playlist2</option>
+              <option value="Playlist3">Playlist3</option>
+              <option value="Playlist4">Playlist4</option>
+              <option value="Playlist5">Playlist5</option>
+            </select>
+          </div>
+          <div>
+            <label for="layout" class="block text-sm font-medium text-gray-900">
+              Default Layout
+            </label>
+            <select
+              id="layout"
+              formControlName="default_layout"
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="background-download"
+            formControlName="background_download"
+            class="w-4 h-4 border border-gray-300 rounded focus:ring-blue-500"
+          />
+          <label for="background-download" class="ml-2 text-sm text-gray-700">
+            Background Download
+          </label>
+        </div>
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="status"
+            formControlName="status"
+            class="w-4 h-4 border border-gray-300 rounded focus:ring-blue-500"
+          />
+          <label for="status" class="ml-2 text-sm text-gray-700">Status</label>
+        </div>
+      </div>
+
+      <!-- Submit and Cancel Buttons -->
+      <div class="flex justify-end space-x-4">
+        <button
+          type="button"
+          class="bg-primary-900 text-white px-4 py-2 rounded-md hover:opacity-90"
+          (click)="closeEditModal()"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="bg-red-500 text-white px-4 py-2 rounded-md hover:opacity-90"
+          (click)="deleteNetworkHandler(selectedNetwork.network_id)"
+        >
+          Delete
+        </button>
+        <button
+          type="submit"
+          class="bg-primary-1000 px-4 py-2 rounded-md hover:opacity-90"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

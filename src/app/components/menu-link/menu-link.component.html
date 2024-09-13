@@ -1,0 +1,40 @@
+<li>
+  <a
+    [routerLink]="linkData.href"
+    (click)="toggleSubMenu($event)"
+    routerLinkActive="bg-primary-700 text-white"
+    class="flex items-center p-2 text-primary-50 transition duration-75 rounded-lg hover:bg-primary-100 dark:hover:bg-gray-700 dark:text-white group"
+  >
+    <img
+      [src]="linkData.iconPath"
+      alt="{{ linkData.text }} icon"
+      class="w-5 h-5 mr-2"
+    />
+    <span class="ms-3">{{ linkData.text }}</span>
+    <svg
+      *ngIf="linkData.subMenuItems"
+      class="w-4 h-4 ml-auto"
+      [ngClass]="{ 'rotate-180': isSubMenuOpen }"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M5.23 7.21a.75.75 0 011.06-.02L10 10.688l3.71-3.5a.75.75 0 111.06 1.06l-4.25 4a.75.75 0 01-1.06 0l-4.25-4a.75.75 0 01-.02-1.06z"
+        clip-rule="evenodd"
+      />
+    </svg>
+  </a>
+
+  <ul *ngIf="isSubMenuOpen" class="pl-4 space-y-1">
+    <li *ngFor="let subItem of linkData.subMenuItems">
+      <a
+        [routerLink]="subItem.href"
+        class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
+      >
+        <span class="ms-3">{{ subItem.text }}</span>
+      </a>
+    </li>
+  </ul>
+</li>

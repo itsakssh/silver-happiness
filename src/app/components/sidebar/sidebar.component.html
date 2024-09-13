@@ -1,0 +1,13 @@
+<aside
+  id="separator-sidebar"
+  class="fixed top-0 left-0 z-40 w-[280px] h-full transition-transform bg-primary-900 text-white border-r border-[#697485]"
+  aria-label="Sidebar"
+>
+  <div class="h-full overflow-y-auto px-3 pt-24">
+    <ul class="space-y-2">
+      <li *ngFor="let item of menuItems">
+        <app-menu-link [linkData]="item"></app-menu-link>
+      </li>
+    </ul>
+  </div>
+</aside>

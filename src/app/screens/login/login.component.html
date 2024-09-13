@@ -1,0 +1,155 @@
+<app-toast></app-toast>
+<div class="flex items-center justify-center gap-x-16 h-screen">
+  <div
+    class="col-span-5 text-white lg:flex justify-center items-center py-24 rounded-[30px] bg-[#CED2D8] hidden"
+  >
+    <img
+      src="../assets/images/login-image.svg"
+      class="w-auto"
+      alt="Placeholder Image"
+    />
+  </div>
+  <div class="p-5 text-black flex justify-center items-center">
+    <div class="w-full dark:borders md:mt-0 sm:max-w-lg xl:p-0">
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <a
+          routerLink="/"
+          class="flex justify-center items-center mb-6 text-2xl font-semibold"
+        >
+          <img
+            class="w-48 sh-20 mr-2"
+            src="../assets/images/2 82.png"
+            alt="logo"
+          />
+        </a>
+        <h1
+          class="text-lg text-center font-bold leading-tight tracking-tight text-gray-900 md:text-lg dark:text-black"
+        >
+          Welcome to the Prowtech International Vina JSC
+        </h1>
+        <h5 class="text-gray-500">
+          Welcome back! Login with your data that you entered during
+          registration.
+        </h5>
+
+        <div class="flex justify-center gap-4 mt-4">
+          <button
+            class="flex items-center px-4 py-2 rounded-lg border"
+            [ngClass]="{
+              'bg-gray-200': selectedLogin === 'admin',
+              'text-gray-900 border-gray-300': selectedLogin !== 'admin'
+            }"
+            (click)="setLoginType('admin')"
+          >
+            <img
+              src="../../../assets/icons/admin.svg"
+              alt="Admin"
+              class="mr-2 w-5"
+            />
+            Admin Login
+          </button>
+          <button
+            class="flex items-center px-4 py-2 rounded-lg border"
+            [ngClass]="{
+              'bg-gray-200': selectedLogin === 'manager',
+              'text-gray-900 border-gray-300': selectedLogin !== 'manager'
+            }"
+            (click)="setLoginType('manager')"
+          >
+            <img
+              src="../../../assets/icons/manager.svg"
+              alt="Manager"
+              class="mr-2 w-5"
+            />
+            Manager Login
+          </button>
+        </div>
+
+        <form
+          class="space-y-4 md:space-y-6"
+          (ngSubmit)="onSubmit()"
+          #loginForm="ngForm"
+        >
+          <div>
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
+              >Your email</label
+            >
+            <input
+              type="email"
+              name="email"
+              [(ngModel)]="email"
+              #emailInput="ngModel"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+              placeholder="name@company.com"
+              required
+            />
+            <div
+              *ngIf="emailInput.invalid && emailInput.touched"
+              class="text-red-500 text-sm"
+            >
+              Email is required
+            </div>
+          </div>
+          <div>
+            <label
+              for="password"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
+              >Password</label
+            >
+            <input
+              type="password"
+              name="password"
+              [(ngModel)]="password"
+              #passwordInput="ngModel"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+              placeholder="••••••••"
+              required
+            />
+            <div
+              *ngIf="passwordInput.invalid && passwordInput.touched"
+              class="text-red-500 text-sm"
+            >
+              Password is required
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input
+                  id="remember"
+                  type="checkbox"
+                  [(ngModel)]="rememberMe"
+                  name="remember"
+                  class="w-4 h-4 border border-gray-300 rounded bg-gray-50"
+                />
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="remember" class="text-gray-500">Remember me</label>
+              </div>
+            </div>
+            <a
+              href="#"
+              class="text-sm font-medium text-primary-900 hover:underline"
+              >Forgot password?</a
+            >
+          </div>
+          <button
+            type="submit"
+            [disabled]="loginForm.invalid"
+            class="w-full text-white bg-primary-900 hover:bg-primary-900 cursor-pointer focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
+          >
+            {{ isLoading ? "Loading..." : "Login" }}
+          </button>
+          <!-- <p class="text-sm font-light text-gray-500">
+            Don’t have an account yet?
+            <a href="#" class="font-medium text-primary-900 hover:underline"
+              >Sign up</a
+            >
+          </p> -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

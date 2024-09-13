@@ -1,0 +1,231 @@
+<form class="space-y-6" (ngSubmit)="onSubmit()" #deviceForm="ngForm">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <label for="deviceName" class="block text-sm font-medium text-gray-900">
+        Device Name <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="text"
+        id="deviceName"
+        name="deviceName"
+        [(ngModel)]="deviceName"
+        placeholder="Device Name"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="deviceId" class="block text-sm font-medium text-gray-900">
+        Device ID <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="text"
+        id="deviceId"
+        name="deviceId"
+        [(ngModel)]="deviceId"
+        placeholder="Device ID"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="deviceLabel" class="block text-sm font-medium text-gray-900">
+        Device Label
+      </label>
+      <input
+        type="text"
+        id="deviceLabel"
+        name="deviceLabel"
+        [(ngModel)]="deviceLabel"
+        placeholder="Device Label"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <div>
+      <label
+        for="deviceManagerName"
+        class="block text-sm font-medium text-gray-900"
+      >
+        Device Manager Name
+      </label>
+      <input
+        type="text"
+        id="deviceManagerName"
+        name="deviceManagerName"
+        [(ngModel)]="deviceManagerName"
+        placeholder="Device Manager Name"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <div>
+      <label for="orientation" class="block text-sm font-medium text-gray-900">
+        Orientation
+      </label>
+      <select
+        id="orientation"
+        name="orientation"
+        [(ngModel)]="orientation"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      >
+        <option value="default">Default</option>
+        <option value="rotate-left">Rotate 90° left</option>
+        <option value="rotate-right">Rotate 90° right</option>
+      </select>
+    </div>
+    <div>
+      <label
+        for="synchronization"
+        class="block text-sm font-medium text-gray-900"
+      >
+        Synchronization
+      </label>
+      <select
+        id="synchronization"
+        name="synchronization"
+        [(ngModel)]="synchronization"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      >
+        <option>Select Synchronization</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="tag" class="block text-sm font-medium text-gray-900"
+        >Tag</label
+      >
+      <input
+        type="text"
+        id="tag"
+        name="tag"
+        [(ngModel)]="tag"
+        placeholder="Enter Tag"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <div>
+      <label for="keyword" class="block text-sm font-medium text-gray-900"
+        >Keyword</label
+      >
+      <input
+        type="text"
+        id="keyword"
+        name="keyword"
+        [(ngModel)]="keyword"
+        placeholder="Enter Keyword"
+        class="mt-1 block w-full border border-gray-300 rounded-lg p-2.5 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <div class="col-span-2">
+      <label class="block text-sm font-medium text-gray-900">Options</label>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="status"
+            name="status"
+            [(ngModel)]="status"
+            class="h-5 w-5 text-blue-600"
+          />
+          <label for="status" class="ml-2 text-gray-700">Status</label>
+        </div>
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="screenConnection"
+            name="screenConnection"
+            [(ngModel)]="screenConnection"
+            class="h-5 w-5 text-blue-600"
+          />
+          <label for="screenConnection" class="ml-2 text-gray-700"
+            >Screen Connection</label
+          >
+        </div>
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="enableNotification"
+            name="enableNotification"
+            [(ngModel)]="enableNotification"
+            class="h-5 w-5 text-blue-600"
+          />
+          <label for="enableNotification" class="ml-2 text-gray-700"
+            >Enable Notification</label
+          >
+        </div>
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="usbDevice"
+            name="usbDevice"
+            [(ngModel)]="usbDevice"
+            class="h-5 w-5 text-blue-600"
+          />
+          <label for="usbDevice" class="ml-2 text-gray-700">USB Device</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-span-2">
+      <label class="block text-sm font-medium text-gray-900"
+        >Restart Options</label
+      >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="restartDevice"
+            name="restartDevice"
+            [(ngModel)]="restartDevice"
+            class="h-5 w-5 text-blue-600"
+          />
+          <label for="restartDevice" class="ml-2 text-gray-700"
+            >Restart Device</label
+          >
+        </div>
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="restartApp"
+            name="restartApp"
+            [(ngModel)]="restartApp"
+            class="h-5 w-5 text-blue-600"
+          />
+          <label for="restartApp" class="ml-2 text-gray-700">Restart App</label>
+        </div>
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="autoStartApp"
+            name="autoStartApp"
+            [(ngModel)]="autoStartApp"
+            class="h-5 w-5 text-blue-600"
+          />
+          <label for="autoStartApp" class="ml-2 text-gray-700"
+            >Auto Start App</label
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-end space-x-4 mt-6">
+    <button
+      type="button"
+      class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      class="bg-primary-900 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+    >
+      Submit
+    </button>
+  </div>
+</form>
